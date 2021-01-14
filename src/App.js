@@ -1,11 +1,17 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Layout, Menu, Breadcrumb } from 'antd';
+import UI from './ui/ui';
 import './App.css';
 
-const App = () => (
-  <div className="App">
-    <Button type="primary">Button</Button>
-  </div>
-);
+const { Header, Content, Footer, Sider } = Layout;
+const { SubMenu } = Menu;
+
+class App extends React.Component {
+  render() {
+    return (
+      <UI></UI>
+    );
+  }
+}
 
 export default App;
