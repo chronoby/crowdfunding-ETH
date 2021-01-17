@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu } from 'antd';
 import {
     LeftOutlined,
     ContactsOutlined,
@@ -14,11 +14,9 @@ import All from './pages/all'
 import Icreate from "./pages/icreate"
 import Participating from './pages/participating'
 import Help from './pages/help'
+import Funding from './pages/funding'
 
 import { BrowserRouter, Route, Link, Switch, Router } from 'react-router-dom'
-
-const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
 
 class UI extends React.Component {
     state = {
@@ -29,6 +27,10 @@ class UI extends React.Component {
         console.log(collapsed);
         this.setState({ collapsed });
     };
+
+    async componentDidMount() {
+        await this.props.refresh_account();
+    }
 
     render() {
         const { collapsed } = this.state;
@@ -71,11 +73,42 @@ class UI extends React.Component {
                         </Menu>
                     </Sider>
                     <Switch>
-                        <Route path="/" exact component={Home} />
-                        <Route path='/create' component={Create} />
-                        <Route path='/all' component={All} />
-                        <Route path='/icreate' component={Icreate} />
-                        <Route path='/participating' component={Participating} />
+                        <Route path='/fundings/:index' children={
+                            <Funding
+                                current_account={this.props.current_account}
+                            ></Funding>
+                        }>
+                        </Route>
+                        <Route exact path="/" component={Home} />
+                        <Route path='/create' >
+                            <Create
+                                current_account={this.props.current_account}
+                                createFunding={this.props.createFunding}
+                            ></Create>
+                        </Route>
+                        <Route path='/all' >
+                            <All
+                                current_account={this.props.current_account}
+                                fundings_info={this.props.fundings_info}
+                                Participate={this.props.Participate}
+                                refresh_account={this.props.refresh_account}
+                            ></All>
+                        </Route>
+                        <Route path='/icreate' >
+                            <Icreate
+                                current_account={this.props.current_account}
+                                my_fundings_info={this.props.my_fundings_info}
+                                createRequest={this.props.createRequest}
+                                refresh_account={this.props.refresh_account}
+                            ></Icreate>
+                        </Route>
+                        <Route path='/participating' >
+                            <Participating
+                                current_account={this.props.current_account}
+                                part_fundings_info={this.props.part_fundings_info}
+                                refresh_account={this.props.refresh_account}
+                            ></Participating>
+                        </Route>
                         <Route path='/Help' component={Help} />
                     </Switch>
                 </BrowserRouter>
