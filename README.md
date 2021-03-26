@@ -31,7 +31,7 @@ development: {
 4. Run in terminal
 
 ```bash
-npm install
+yarn install
 yarn start
 ```
 
